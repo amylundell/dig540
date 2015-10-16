@@ -1,0 +1,156 @@
+SELECT person . *
+FROM `person`
+WHERE name LIKE '%sh%'
+LIMIT 0 , 30
+
+"7","Arielle Lipshaw"
+"13","Peter Bishop"
+
+SELECT chapter.title, recording.title
+FROM chapter, recording
+WHERE recording.id = chapter.recording_id
+LIMIT 0 , 30
+
+"Part One","The Adventure of the Speckled Band"
+"Part Two","The Adventure of the Speckled Band"
+"01-Chatterer the Red Squirrel Runs for His Life","The Adventures of Chatterer the Red Squirrel"
+"02-Chatterer's Last Chance","The Adventures of Chatterer the Red Squirrel"
+"Chapter One","Pride and Prejudice"
+"Chapter Two","Pride and Prejudice"
+
+SELECT `author`.`name` AS 'author', `work`.`title` AS 'title', `work`.`original_publish_date` AS 'date published'
+FROM `author` , `work` , `author_work`
+WHERE `author`.`id` = `author_work`.`author_id`
+AND `work`.`id` = `author_work`.`work_id`
+LIMIT 0 , 30
+
+"Doyle, Sir Arthur Conan","The Adventure of the Speckled Band","1892"
+"Burgess, Thornton W.","The Adventures of Chatterer the Red Squirrel","1915"
+"Austen, Jane","Pride and Prejudice","1813"
+
+SELECT `person`.`name` AS 'person', `person_recording`.`role` AS 'role', `recording`.`title` AS 'title'
+FROM `person` , `person_recording` , `recording`
+WHERE `person`.`id` = `person_recording`.`person_id`
+AND `recording`.`id` = `person_recording`.`recording_id`
+LIMIT 0 , 30
+
+"Phil Chenevert","Reader","The Adventure of the Speckled Band"
+"Phil Chenevert","Book Coordinator","The Adventure of the Speckled Band"
+"Phil Chenevert","Meta Coordinator","The Adventure of the Speckled Band"
+"DaveC","Proof Listener","The Adventure of the Speckled Band"
+"maryagneskatherine","Reader","The Adventures of Chatterer the Red Squirrel"
+"Jill Engle","Reader","The Adventures of Chatterer the Red Squirrel"
+"Jill Engle","Book Coordinator","The Adventures of Chatterer the Red Squirrel"
+"Phil Chenevert","Meta Coordinator","The Adventures of Chatterer the Red Squirrel"
+"Paula Santa","Proof Listener","The Adventures of Chatterer the Red Squirrel"
+"Debra Lynn","Reader","Pride and Prejudice"
+"Arielle Lipshaw","Reader","Pride and Prejudice"
+"Arielle Lipshaw","Book Coordinator","Pride and Prejudice"
+"Arielle Lipshaw","Meta Coordinator","Pride and Prejudice"
+"Betty M.","Proof Listener","Pride and Prejudice"
+"Beth Thomas","Reader","Pride and Prejudice"
+"Beth Thomas","Reader","Pride and Prejudice"
+"Andy Minter","Reader","Pride and Prejudice"
+"Elizabeth Klett","Reader","Pride and Prejudice"
+"John Fricker","Reader","Pride and Prejudice"
+"Peter Bishop","Reader","Pride and Prejudice"
+
+SELECT `work`.`title` AS 'work title', `work`.`original_publish_date` , `recording`.`title` AS 'recording title', `recording`.`narration_type`
+FROM `work` , `recording` , `work_recording`
+WHERE `work`.`id` = `work_recording`.`work_id`
+AND `recording`.`id` = `work_recording`.`recording_id`
+LIMIT 0 , 30
+
+"The Adventure of the Speckled Band","1892","The Adventure of the Speckled Band","Solo"
+"The Adventures of Chatterer the Red Squirrel","1915","The Adventures of Chatterer the Red Squirrel","Collaborative"
+"Pride and Prejudice","1813","Pride and Prejudice","Dramatic"
+
+5 Questions
+
+1.  In which recordings and in what capacities has Phil Chenevert participated?
+
+SELECT `recording`.`title` AS 'recording title', `person_recording`.`role` , `person_recording`.`character_read`
+FROM `recording` , `person_recording`
+WHERE `recording`.`id` = `person_recording`.`recording_id`
+AND `person_id` = '1'
+LIMIT 0 , 30
+
+"The Adventure of the Speckled Band","Reader","Narrator"
+"The Adventure of the Speckled Band","Book Coordinator",
+"The Adventure of the Speckled Band","Meta Coordinator",
+"The Adventures of Chatterer the Red Squirrel","Meta Coordinator",
+
+2. Who has participated in recording a Jane Austen work and in what capacities?
+
+SELECT `recording`.`title` , `person`.`name` AS 'person', `person_recording`.`role` , `person_recording`.`character_read`
+FROM `person` , `person_recording` , `recording` , `author` , `author_work` , `work_recording` , `work`
+WHERE `person`.`id` = `person_recording`.`person_id`
+AND `recording`.`id` = `person_recording`.`recording_id`
+AND `author`.`id` = `author_work`.`author_id`
+AND `work`.`id` = `author_work`.`work_id`
+AND `work`.`id` = `work_recording`.`work_id`
+AND `recording`.`id` = `work_recording`.`recording_id`
+AND `author_id` =3
+LIMIT 0 , 30
+
+"Pride and Prejudice","Debra Lynn","Reader","Narrator"
+"Pride and Prejudice","Arielle Lipshaw","Reader","Elizabeth Bennet"
+"Pride and Prejudice","Arielle Lipshaw","Book Coordinator",
+"Pride and Prejudice","Arielle Lipshaw","Meta Coordinator",
+"Pride and Prejudice","Betty M.","Proof Listener",
+"Pride and Prejudice","Beth Thomas","Reader","Mrs. Bennet"
+"Pride and Prejudice","Beth Thomas","Reader","Young Mr. Lucas"
+"Pride and Prejudice","Andy Minter","Reader","Mr. Bennet"
+"Pride and Prejudice","Elizabeth Klett","Reader","Jane Bennet"
+"Pride and Prejudice","John Fricker","Reader","Mr. Bingley"
+"Pride and Prejudice","Peter Bishop","Reader","Mr. Darcy"
+
+3. Besides reading a character, what are the other roles are in each recording and who fills them?
+
+SELECT `recording`.`title` , `person`.`name` , `person_recording`.`role`
+FROM `recording` , `person` , `person_recording`
+WHERE `recording`.`id` = `person_recording`.`recording_id`
+AND `person`.`id` = `person_recording`.`person_id`
+AND NOT `person_recording`.`role` = 'reader'
+LIMIT 0 , 30
+
+"The Adventure of the Speckled Band","Phil Chenevert","Book Coordinator"
+"The Adventure of the Speckled Band","Phil Chenevert","Meta Coordinator"
+"The Adventure of the Speckled Band","DaveC","Proof Listener"
+"The Adventures of Chatterer the Red Squirrel","Jill Engle","Book Coordinator"
+"The Adventures of Chatterer the Red Squirrel","Phil Chenevert","Meta Coordinator"
+"The Adventures of Chatterer the Red Squirrel","Paula Santa","Proof Listener"
+"Pride and Prejudice","Arielle Lipshaw","Book Coordinator"
+"Pride and Prejudice","Arielle Lipshaw","Meta Coordinator"
+"Pride and Prejudice","Betty M.","Proof Listener"
+
+4. In what work by which author and in what recording is a chapter entitled, "Chatterer's Last Chance"?
+
+SELECT `work`.`title` AS 'work title', `recording`.`title` AS 'recording title', `author`.`name` AS 'author'
+FROM `work` , `recording` , `work_recording` , `author` , `author_work` , `chapter`
+WHERE `author`.`id` = `author_work`.`author_id`
+AND `work`.`id` = `author_work`.`work_id`
+AND `work`.`id` = `work_recording`.`work_id`
+AND `recording`.`id` = `work_recording`.`recording_id`
+AND `recording`.`id` = `chapter`.`recording_id`
+AND `chapter`.`title` LIKE '%Last Chance'
+LIMIT 0 , 30
+
+"The Adventures of Chatterer the Red Squirrel","The Adventures of Chatterer the Red Squirrel","Burgess, Thornton W."
+
+5. Who narrates the first chapter of "The Adventures of Chatterer the Red Squirrel"?
+
+SELECT `chapter`.`title` AS 'chapter title', `person`.`name` AS 'narrator'
+FROM `person` , `recording` , `chapter` , `person_recording` , `work` , `work_recording`
+WHERE `person`.`id` = `person_recording`.`person_id`
+AND `recording`.`id` = `person_recording`.`recording_id`
+AND `chapter`.`recording_id` = `recording`.`id`
+AND `work`.`id` = `work_recording`.`work_id`
+AND `recording`.`id` = `work_recording`.`recording_id`
+AND `work`.`id` = '2'
+AND `chapter`.`title` LIKE '%1%'
+AND `person_recording`.`character_read` LIKE 'narrator%'
+AND `person_recording`.`character_read` LIKE '%1,%'
+LIMIT 0 , 30
+
+"01-Chatterer the Red Squirrel Runs for His Life","maryagneskatherine"
