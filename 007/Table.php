@@ -2,6 +2,7 @@
 class Table{
   private $firstNumber;
   private $secondNumber;
+  private $results;
 
   public function setTable($firstNumber, $secondNumber){
   $this->firstNumber = $firstNumber;
@@ -13,11 +14,15 @@ class Table{
     for($i=0; $i<$this->firstNumber; $i++){
       array_push($results, $i * $this->secondNumber);
     }
+    $this->results = $results;
     return $results;
   }
 
   public function getResults(){
-    echo $results;
+    print "<pre>";
+    print_r($this->results);
+    print "</pre>";
+
   }
 }
 

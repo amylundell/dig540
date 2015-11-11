@@ -19,7 +19,7 @@ require_once('Table.php');
 <?php
 if(is_numeric($_POST['number']) && $_POST['number'] !=''){
   $myTable = new Table();
-  $myTable->setTable('12', $_POST['number']);
+  $myTable->setTable('13', $_POST['number']);
   $myTable->multiply();
   $myTable->getResults();
 }else{
